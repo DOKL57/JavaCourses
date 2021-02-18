@@ -32,30 +32,32 @@ public class ComLineParser {
         for (argNum = 0; (ss == SwitchStatus.NoError) && (argNum < args.length); argNum++) {
             boolean isDelimeter = false;
             for (int n = 0; !isDelimeter && (n < delimeters.length); n++) {
-                isDelimeter = args[argNum].regionMatches(0,delimeters[n], 0, 1);
+                isDelimeter = args[argNum].regionMatches(0, delimeters[n], 0, 1);
             }
             if (isDelimeter) {
-                // проверка наличия правильного ключа
+                //проверка наличия правильного ключа
                 boolean isKey = false;
                 int i;
                 for (i = 0; !isKey && (i < keys.length); i++) {
-                    isKey = args[argNum].toUpperCase().regionMatches(1,
-                            keys[i].toUpperCase(),0,keys[i].length());
+                    isKey = args[argNum].toUpperCase().regionMatches(1, keys[i].toUpperCase(), 0, keys[i].length());
                     if (isKey) break;
                 }
-                if(!isKey) ss = SwitchStatus.Error;
+                if (!isKey) {
+                    ss = SwitchStatus.Error;
+                    break;
+                }
+                else {
+                    ss = OnSwitch(keys[i].toLowerCase(), args[argNum].substring(1 + keys[i].length()));
+                }
             }
             else {
-                ss= SwitchStatus.Error;
+                ss = SwitchStatus.Error;
                 break;
             }
-
         }
         if(ss == SwitchStatus.Error) OnUsage((argNum == args.length) ? null : args[argNum]);
         if (ss == SwitchStatus.ShowUsage)    OnUsage(null);
         return ss == SwitchStatus.NoError;
-
-
 
     }
 
