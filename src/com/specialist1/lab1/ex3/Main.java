@@ -19,7 +19,7 @@ public class Main {
                 sb.append("0");
             }
             m>>=1;
-            if(i==15 || i == 7 || i == 23){ sb.append(" ");; }
+            if(i==15 || i == 7 || i == 23){ sb.append(" "); }
 
         }
         sb.reverse();
