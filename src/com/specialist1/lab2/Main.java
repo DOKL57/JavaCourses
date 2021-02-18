@@ -4,6 +4,6 @@ public class Main {
     public static void main(String[] args){
         String[] keys = {"?","r","w" };
         ComLineParser pars = new ComLineParser(keys);
-        pars.Parse(args);
+        System.out.println(pars.Parse(args));
     }
 }
