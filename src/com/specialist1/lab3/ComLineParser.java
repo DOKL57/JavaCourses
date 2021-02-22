@@ -1,30 +1,28 @@
 package com.specialist1.lab3;
 
 public class ComLineParser {
+    private String[] keys;           // ключи
+    private String[] delimeters;     // разделители  "/", "-"
+
+    protected enum SwitchStatus { NoError, Error, ShowUsage };
+
     public ComLineParser(String[] keys) {
-        this(keys, new String[]{"/","-"});
+        this(keys, new String[] { "/", "-" });
+    }
+    public ComLineParser(String[] keys, String[] delimeters) {
+        this.keys = keys;
+        this.delimeters   = delimeters;
     }
 
-    public void OnUsage(String errorKey){
-        if(errorKey!=null) System.out.println(errorKey);
-        StringBuilder sb = new StringBuilder();
-        sb.append("формат ком.строки: имяПрограммы [-r<input-fileName>] [-w<output-fileName>]\n");
-        sb.append("формат ком.строки: имяПрограммы [-r<input-fileName>] [-w<output-fileName>]\n");
-        sb.append("   -?  показать Help файл\n");
-        sb.append("   -r  задать имя входного файла\n");
-        sb.append("   -w  выполнить вывод в указанный файл");
-        System.out.println(sb.toString());
+    protected void OnUsage(String errorKey){
 
     }
 
-    public SwitchStatus OnSwitch(String key, String keyValue){
-        StringBuilder sb = new StringBuilder();
-        sb.append(key+"\n");
-        sb.append(keyValue);
-        System.out.println(sb.toString());
-        return SwitchStatus.NoError;
+    protected SwitchStatus OnSwitch(String key, String keyValue) {
+        return SwitchStatus.Error;
     }
-    public Boolean Parse(String[] args){
+
+    public Boolean Parse(String[] args) {
         SwitchStatus ss = SwitchStatus.NoError;
         int argNum;
         for (argNum = 0; (ss == SwitchStatus.NoError) && (argNum < args.length); argNum++) {
@@ -58,13 +56,4 @@ public class ComLineParser {
         return ss == SwitchStatus.NoError;
 
     }
-
-    public ComLineParser(String[] keys, String[] delimeters) {
-        this.keys = keys;
-        this.delimeters = delimeters;
-    }
-
-    String[] keys;
-    String[] delimeters;
-    public enum SwitchStatus { NoError, Error, ShowUsage };
 }
