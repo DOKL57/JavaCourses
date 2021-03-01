@@ -9,7 +9,7 @@ public class MyCounter {
         SimpleParser sp=new SimpleParser();
         sp.Parse(args);
 
-        WordCount wc=new WordCount("readme.txt",null);
+        WordCount wc=new WordCount("radme.txt",null);
         //WordCounter wc=new WordCounter(sp.getInFile(), null);
         wc.countWords();
 
