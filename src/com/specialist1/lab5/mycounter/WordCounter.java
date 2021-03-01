@@ -8,6 +8,23 @@ public class WordCounter {
     private String outFile;
     private static String testString = " fhfghgf  hello   o wtryh\n  hello o o ";
 
+    private Vector<IWordCounter> listeners = new Vector<>();
+
+    public void addListener(IWordCounter listener){
+        listeners.add(listener);
+    }
+
+    public void delListener(IWordCounter listener){
+        listeners.removeElement(listener);
+    }
+
+    protected void fireCounter(int size){
+        for (IWordCounter listener: listeners
+             ) {
+            listener.counter(listener, size);
+        }
+    }
+
     public WordCounter(String inFile, String outFile) {
         this.inFile = inFile;
         this.outFile = outFile;
@@ -46,5 +63,7 @@ public class WordCounter {
             System.out.println("num="+num);
         }
         catch (IOException ex) { ex.printStackTrace(); }
+
+        fireCounter(num);
     }
 }

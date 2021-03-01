@@ -10,6 +10,12 @@ public class MyCounter {
         
         //WordCounter wc=new WordCounter(null,null);
         WordCounter wc=new WordCounter(sp.getInFile(), null);
+
+        wc.addListener(new IWordCounter() {
+            public void counter(Object sender, int size) {
+                System.out.println("client get result="+size);
+            }        });
+
         wc.countWords();
         
         Enumeration keys = wc.getWords().keys();
