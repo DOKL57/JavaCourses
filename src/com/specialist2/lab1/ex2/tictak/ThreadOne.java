@@ -1,19 +1,25 @@
-package tictak;
+package com.specialist2.lab1.ex2.tictak;
 
 public class ThreadOne extends Thread {
-  
-    public ThreadOne() {
-
+    private Object monitor;
+    public ThreadOne(Object monitor) {
+        this.monitor = monitor;
     }
 
     public void run () {
-        //try 
+        try
         {
             for (int i = 0; i < TicTak.num; i++) {
                 System.out.print(1+" - ");
+                synchronized (monitor) {
+                    monitor.notify();
+                    if (i < TicTak.num-1)
+                        monitor.wait();
+                }
+
 
             }
         }
-        //catch (InterruptedException e) { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
     }
 }
