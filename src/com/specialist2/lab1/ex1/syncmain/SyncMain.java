@@ -16,21 +16,24 @@ class MyThread implements Runnable {
     
     void Add(){
         try {
-            Thread.sleep(5);
-            int n=obj.count;
-            n++;
-            Thread.sleep(5);
-            obj.count=n;
+            synchronized(obj) {
+                int n = obj.count;
+                n++;
+                Thread.sleep(5);
+                obj.count = n;
+            }
         } catch (InterruptedException ex) {       }
     }
     
     static void AddStatic() {
                 try {
-            Thread.sleep(5);
-            int n=Data.countSt;
-            n++;
-            Thread.sleep(5);
-            Data.countSt=n;
+                    Thread.sleep(5);
+                    synchronized (Data.class) {
+                        int n = Data.countSt;
+                        n++;
+                        Thread.sleep(5);
+                        Data.countSt = n;
+                    }
         } catch (InterruptedException ex) {       }
     }
     
@@ -47,6 +50,7 @@ public class SyncMain {
         Data d=new Data();
         MyThread t1=new MyThread(d);
         MyThread t2=new MyThread(d);
+
 
         Thread.sleep(3000);
         System.out.println(d.count);
