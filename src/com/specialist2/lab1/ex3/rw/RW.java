@@ -1,4 +1,4 @@
-package rw;
+package com.specialist2.lab1.ex3.rw;
 
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
@@ -36,6 +36,11 @@ class WorkWData implements Runnable {
 
 class Data {
     private int count=0;
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    private Lock rl = lock.readLock();
+    private Lock wl = lock.writeLock();
+
 
     int read(){
         try {
@@ -44,7 +49,7 @@ class Data {
             count=n;
         } 
         catch (InterruptedException ex) { }
-        
+        finally { rl.unlock(); }
         return count;
     }
     void write(){
@@ -55,5 +60,6 @@ class Data {
             count=n;
         } 
         catch (InterruptedException ex) { }
+        finally{wl.unlock();}
     }
 }
