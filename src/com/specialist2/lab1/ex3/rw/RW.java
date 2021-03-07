@@ -44,6 +44,7 @@ class Data {
 
     int read(){
         try {
+            rl.lock();
             int n = count;
             TimeUnit.MILLISECONDS.sleep(400);
             count=n;
@@ -54,6 +55,7 @@ class Data {
     }
     void write(){
         try {
+            wl.lock();
             int n = count;
             TimeUnit.MILLISECONDS.sleep(400);
             n++;
